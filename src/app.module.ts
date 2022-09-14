@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PartyModule } from './parties/party.module';
 import { UserModule } from './users/user.module';
+import { WhislistModule } from './whislists/whislist.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { UserModule } from './users/user.module';
       autoLoadEntities: true,
     }),
     UserModule,
-    PartyModule
+    PartyModule,
+    WhislistModule
   ],
   controllers: [AppController],
   providers: [AppService],
