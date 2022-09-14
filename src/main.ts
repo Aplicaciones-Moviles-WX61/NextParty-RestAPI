@@ -8,7 +8,6 @@ async function bootstrap() {
     .setTitle('NextParty API')
     .setDescription('Documentation for NextParty RESTfull API')
     .setVersion('1.0')
-    .addTag('Users')
     .build();
 
     const document = SwaggerModule.createDocument(app, options);

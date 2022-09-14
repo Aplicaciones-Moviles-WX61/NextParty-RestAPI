@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PartyModule } from './party/party.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -15,7 +16,8 @@ import { UserModule } from './user/user.module';
       database: 'test',
       autoLoadEntities: true,
     }),
-    UserModule
+    UserModule,
+    PartyModule
   ],
   controllers: [AppController],
   providers: [AppService],
