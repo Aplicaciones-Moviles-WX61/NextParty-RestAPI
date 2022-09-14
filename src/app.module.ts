@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PartyModule } from './party/party.module';
-import { UserModule } from './user/user.module';
+import { PartyModule } from './parties/party.module';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
