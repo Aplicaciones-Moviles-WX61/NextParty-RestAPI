@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ItemsModule } from './items/items.module';
 import { PartyModule } from './parties/party.module';
 import { UserModule } from './users/user.module';
 import { WhislistModule } from './whislists/whislist.module';
@@ -19,7 +20,8 @@ import { WhislistModule } from './whislists/whislist.module';
     }),
     UserModule,
     PartyModule,
-    WhislistModule
+    WhislistModule,
+    ItemsModule
   ],
   controllers: [AppController],
   providers: [AppService],
