@@ -15,7 +15,7 @@ export class UserService extends BaseService<User>{
 
   async getById(id: any) : Promise<User>{
     const user = await this.userRepo.find({
-      select: ["name", "lastname", "email", "password", "phone"],
+      select: ["name", "lastname", "email", "password", "phone", "birthday"],
       where: [{ "id": id }]
     });
     if (user.length == 0)
@@ -25,7 +25,6 @@ export class UserService extends BaseService<User>{
 
   async create(user: User) {
     const userExist = await this.userRepo.find({ select: ["email"], where: [{ "email": user.email }] });
-    console.log(userExist);
     if (userExist.length > 0)
       throw new BadRequestException('User already registered with email');
     const newUser = this.userRepo.create(user);
@@ -37,7 +36,6 @@ export class UserService extends BaseService<User>{
 
   async update(id: any, user: User) {
     const userExist = await this.userRepo.find({ select: ["email"], where: [{ "email": user.email }] });
-    console.log(userExist);
     if (userExist.length > 0)
       throw new BadRequestException('This email is already taken');
 
