@@ -1,5 +1,6 @@
+import { Item } from "src/items/entity/item.entity";
 import { Party } from "src/parties/entity/party.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('wishlists')
 export class Wishlist {
@@ -17,5 +18,8 @@ export class Wishlist {
 
   @OneToOne(() => Party, (party) => party.id)
   party: Party;
+
+  @OneToMany(() => Item, (item) => item.id)
+  Items: Item[];
 
 }

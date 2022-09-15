@@ -1,33 +1,32 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { BaseController } from 'src/common/controler.common';
-import { BaseService } from 'src/common/service.common';
 import { Item } from '../entity/item.entity';
 import { ItemsService } from '../service/items.service';
 
 @ApiTags('Items')
-@Controller('items')
-export class ItemsController extends BaseController<Item> {
+@Controller('party/items')
+export class ItemsController {
   constructor(private readonly itemsService: ItemsService){
-    super();
-  }
-
-  getService(): BaseService<Item>{
-    return this.itemsService;
   }
 
   @Get(':id')
-  async getById(@Param('id')id: number) : Promise<Item>{
-    return await this.itemsService.getById(id);
+  async getById(@Param('id')id: number) : Promise<Item[]>{
+    return await this.itemsService.getByPartyId(id);
   }
 
-  @Post()
-  async create(@Body() item: Item) {
-    return await this.itemsService.create(item);
+  @Post(':id')
+  async create(@Param ('id') wishlist_id: number, @Body() item: Item) {
+    return await this.itemsService.create(wishlist_id, item);
   }
 
   @Put(':id')
-  async update(@Param('id')id: number,@Body() item:Item){
+  async update(@Param('id')id: number, @Body() item:Item){
     return await this.itemsService.update(id,item);
   }
+
+  @Delete(":id")
+  async delete(@Param('id') id : number){
+    return await this.itemsService.delete(id);
+  }
+
 }

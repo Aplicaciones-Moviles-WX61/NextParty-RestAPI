@@ -5,7 +5,7 @@ import { PartyService } from "src/parties/service/party.service";
 import { Repository } from "typeorm";
 import { Wishlist } from "../entity/whislist.entity";
 @Injectable()
-export class WishlitService extends BaseService<Wishlist>{
+export class WishlistService extends BaseService<Wishlist>{
   constructor(@InjectRepository(Wishlist) private listRepo: Repository<Wishlist>, private partyService: PartyService) {
     super();
   }
@@ -14,13 +14,28 @@ export class WishlitService extends BaseService<Wishlist>{
   }
 
   async getById(id: any) : Promise<Wishlist>{
-    const user = await this.listRepo.find({
-      select: ["description", "image"],
+    const list = await this.listRepo.find({
+      select: ["description", "image", "party_id"],
       where: [{ "id": id }]
     });
-    if (user.length == 0)
-      throw new BadRequestException('Whislist not found');
-    return user[0];
+    if (list.length == 0)
+      throw new BadRequestException('Wishlist not found');
+    return list[0];
+  }
+
+  async getByPartyId(id: number) {
+    const list = await this.listRepo.find({
+      select: [ "id", "party_id","description", "image"],
+      where: [{ "party_id": id }]
+    });
+
+    if (list.length == 0)
+      throw new BadRequestException('Wishlist not found');
+    return list[0];
+  }
+
+  async partyExist(id: number) {
+    return await this.partyService.exists(id);
   }
 
   async create(party_id: number, list: Wishlist) {

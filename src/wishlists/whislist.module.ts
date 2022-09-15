@@ -4,14 +4,14 @@ import { Party } from "src/parties/entity/party.entity";
 import { PartyService } from "src/parties/service/party.service";
 import { WishlitController } from "./controller/whislist.controller";
 import { Wishlist } from "./entity/whislist.entity";
-import { WishlitService } from "./service/whislist.service";
+import { WishlistService } from "./service/whislist.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Wishlist,Party])],
-  providers : [WishlitService,PartyService],
+  providers : [WishlistService,PartyService],
   controllers: [WishlitController],
 })
 
-export class WhislistModule{
+export class WishlistModule{
 
 }
