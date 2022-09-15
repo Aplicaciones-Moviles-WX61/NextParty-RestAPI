@@ -17,6 +17,7 @@ async function bootstrap() {
       swaggerOptions: {
         filter : true,
         showRequestDuration: true,
+        defaultModelsExpandDepth: -1,
       }
     });
 
