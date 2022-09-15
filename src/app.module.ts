@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ItemsModule } from './items/items.module';
 import { PartyModule } from './parties/party.module';
+import { TypeModule } from './types_of/types.module';
 import { UserModule } from './users/user.module';
 import { WhislistModule } from './whislists/whislist.module';
 
@@ -21,7 +22,8 @@ import { WhislistModule } from './whislists/whislist.module';
     UserModule,
     PartyModule,
     WhislistModule,
-    ItemsModule
+    ItemsModule,
+    TypeModule
   ],
   controllers: [AppController],
   providers: [AppService],
