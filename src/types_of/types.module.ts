@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ItemTypesController } from './controller/item.controller';
-import { TypeOfUserController } from './controller/user.controller';
-import { ItemTypes, TypeOfUser } from './entity/types.entity';
-import { ItemTypesService } from './service/item.service';
-import { TypeOfUserService } from './service/user.service';
+import { CategoryController } from './controller/categories.controller';
+import { RoleController } from './controller/roles.controller';
+import { Categories, Roles } from './entity/types.entity';
+import { CategoryService } from './service/categories.service';
+import { RoleService } from './service/roles.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TypeOfUser,ItemTypes])],
-  controllers: [ItemTypesController,TypeOfUserController],
-  providers: [TypeOfUserService,ItemTypesService]
+  imports: [TypeOrmModule.forFeature([Roles,Categories])],
+  controllers: [RoleController,CategoryController],
+  providers: [RoleService,CategoryService]
 })
 export class TypeModule {}

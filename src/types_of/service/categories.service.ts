@@ -2,19 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/common/service.common';
 import { Repository } from 'typeorm';
-import { ItemTypes } from '../entity/types.entity';
+import { Categories } from '../entity/types.entity';
 
 @Injectable()
-export class ItemTypesService extends BaseService<ItemTypes>{
-  constructor(@InjectRepository(ItemTypes) private repo: Repository<ItemTypes>) {
+export class CategoryService extends BaseService<Categories>{
+  constructor(@InjectRepository(Categories) private repo: Repository<Categories>) {
     super();
   }
 
-  getRepository(): Repository<ItemTypes> {
+  getRepository(): Repository<Categories> {
     return this.repo;
   }
 
-  getAll() : Promise<ItemTypes[]>{
+  getAll() : Promise<Categories[]>{
     return this.getRepository().find();
   }
 
@@ -28,12 +28,12 @@ export class ItemTypesService extends BaseService<ItemTypes>{
   //   return items[0];
   // }
 
-  async create(item: ItemTypes) {
+  async create(item: Categories) {
     this.repo.create(item);
     return await this.repo.save(item);
   }
 
-  async update(id: any,item:ItemTypes){
+  async update(id: any,item:Categories){
     await this.repo.update(id,item);
   }
 

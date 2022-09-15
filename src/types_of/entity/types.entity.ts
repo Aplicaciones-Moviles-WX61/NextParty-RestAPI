@@ -1,18 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-@Entity('type_of_user')
-export class TypeOfUser {
+@Entity('roles')
+export class Roles {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  type: string;
+  role: string;
 }
 
-@Entity('item_types')
-export class ItemTypes {
+@Entity('categories')
+export class Categories {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  type: string;
+  category: string;
 }

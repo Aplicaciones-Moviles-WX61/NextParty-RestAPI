@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/common/service.common';
 import { Repository } from 'typeorm';
-import { TypeOfUser } from '../entity/types.entity';
+import { Roles } from '../entity/types.entity';
 
 @Injectable()
-export class TypeOfUserService extends BaseService<TypeOfUser>{
-  constructor(@InjectRepository(TypeOfUser) private repo: Repository<TypeOfUser>) {
+export class RoleService extends BaseService<Roles>{
+  constructor(@InjectRepository(Roles) private repo: Repository<Roles>) {
     super();
   }
-  getAll() : Promise<TypeOfUser[]>{
+  getAll() : Promise<Roles[]>{
     return this.getRepository().find();
   }
 
-  getRepository(): Repository<TypeOfUser> {
+  getRepository(): Repository<Roles> {
     return this.repo;
   }
 
@@ -27,12 +27,12 @@ export class TypeOfUserService extends BaseService<TypeOfUser>{
   //   return items[0];
   // }
 
-  async create(item: TypeOfUser) {
+  async create(item: Roles) {
     this.repo.create(item);
     return await this.repo.save(item);
   }
 
-  async update(id: any,item:TypeOfUser){
+  async update(id: any,item:Roles){
     await this.repo.update(id,item);
   }
 

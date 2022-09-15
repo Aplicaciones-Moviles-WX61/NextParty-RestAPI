@@ -1,31 +1,31 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ItemTypes } from '../entity/types.entity';
-import { ItemTypesService } from '../service/item.service';
+import { Categories } from '../entity/types.entity';
+import { CategoryService } from '../service/categories.service';
 
-@ApiTags('Types')
-@Controller('item/types')
-export class ItemTypesController{
-  constructor(private readonly service: ItemTypesService){
+@ApiTags('Categorias')
+@Controller('categories')
+export class CategoryController{
+  constructor(private readonly service: CategoryService){
   }
 
   @Get()
-  async getAll() : Promise<ItemTypes[]>{
+  async getAll() : Promise<Categories[]>{
     return await this.service.getAll();
   }
 
   // @Get(':id')
-  // async getById(@Param('id')id: number) : Promise<ItemTypes>{
+  // async getById(@Param('id')id: number) : Promise<Categories>{
   //   return await this.service.getById(id);
   // }
 
   @Post()
-  async create(@Body() item: ItemTypes) {
+  async create(@Body() item: Categories) {
     return await this.service.create(item);
   }
 
   @Put(':id')
-  async update(@Param('id')id: number,@Body() item:ItemTypes){
+  async update(@Param('id')id: number,@Body() item:Categories){
     return await this.service.update(id,item);
   }
 
