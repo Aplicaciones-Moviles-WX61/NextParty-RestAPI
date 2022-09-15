@@ -15,7 +15,7 @@ export class PartyService extends BaseService<Party>{
 
   async getById(id: any) : Promise<Party>{
     const party = await this.partyRepo.find({
-      select: ["name", "location", "date"],
+      select: ["name","description", "location", "date", "image"],
       where: [{ "id": id }]
     });
     if (party.length == 0)
@@ -28,7 +28,17 @@ export class PartyService extends BaseService<Party>{
     return await this.partyRepo.save(party);
   }
 
-  async update(id: any,party:Party){
+  async update(id: any, party:Party){
+    const exist = await this.partyRepo.find({ select: ["id"], where: [{ "id": id }] });
+
+    if (exist.length == 0)
+      throw new BadRequestException('Party not found');
+
     await this.partyRepo.update(id,party);
+  }
+
+  async exists(id: number) {
+    const party = await this.partyRepo.find({ select: ["id"], where: [{ "id": id }] });
+    return party.length != 0;
   }
 }

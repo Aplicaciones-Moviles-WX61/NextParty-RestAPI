@@ -7,13 +7,13 @@ export abstract class BaseService<T>{
     return this.getRepository().find();
   }
 
-  async save(entity: T) {
-    this.getRepository().save(entity)
-  }
+  // async save(entity: T) {
+  //   this.getRepository().save(entity)
+  // }
 
-  saveMany(entities: T[]) : Promise<T[]>{
-    return this.getRepository().save(entities);
-  }
+  // saveMany(entities: T[]) : Promise<T[]>{
+  //   return this.getRepository().save(entities);
+  // }
 
   async delete (id : number){
     await this.getRepository().delete(id)
