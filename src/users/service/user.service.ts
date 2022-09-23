@@ -1,11 +1,17 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { compare, hash } from 'bcryptjs';
+import { Item } from "src/items/entity/item.entity";
+import { Party } from "src/parties/entity/party.entity";
 import { Repository } from "typeorm";
 import { User } from "../entity/user.entity";
 @Injectable()
 export class UserService{
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    @InjectRepository(Party) private partyRepo: Repository<Party>,
+    @InjectRepository(Item) private itemRepo: Repository<Item>
+  ) {
   }
 
   async getAll() : Promise<User[]>{
@@ -64,5 +70,21 @@ export class UserService{
     if (userExist == null)
       throw new BadRequestException('User not found');
     await this.userRepo.delete(id);
+  }
+
+  async createParty(id: number, party: Party) {
+    const user = await this.userRepo.findOneBy({id:id});
+    if (user == null)
+      throw new BadRequestException('User not found');
+    party.users = [user];
+    return await this.partyRepo.save(this.partyRepo.create(party));
+  }
+
+  async checkItem(id: number, item_d: number) {
+    const user = await this.userRepo.findOneBy({id:id});
+    if (user == null)
+      throw new BadRequestException('User not found');
+    user.items = [await this.itemRepo.findOneBy({id:item_d})];
+    return await this.userRepo.save(user);
   }
 }

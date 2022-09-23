@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { Party } from "src/parties/entity/party.entity";
 import { User } from "../entity/user.entity";
 import { UserService } from "../service/user.service";
 
@@ -35,4 +36,14 @@ export class UserController {
     return await this.userService.delete(id);
   }
 
+  @Post(':id')
+  async party(@Param('id') id:number , @Body() party: Party) {
+    return await this.userService.createParty(id,party);
+  }
+
+
+  @Post(':id/:item_id')
+  async checkItem(@Param('id') id:number , @Param('item_id') item_id:number) {
+    return await this.userService.checkItem(id,item_id);
+  }
 }
