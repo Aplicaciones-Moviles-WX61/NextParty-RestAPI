@@ -1,5 +1,7 @@
 import { hash } from 'bcryptjs';
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Item } from 'src/items/entity/item.entity';
+import { Party } from 'src/parties/entity/party.entity';
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
@@ -36,4 +38,20 @@ export class User {
     }
     this.password = await hash(this.password, 10);
   }
+
+  @OneToMany(()=> Party, (party) => party.users)
+  @JoinTable({
+    name: 'user_party',
+    joinColumn: { name: 'user_id' },
+    inverseJoinColumn: { name: 'party_id' }
+  })
+  parties: Party[];
+
+  @OneToMany(()=> Item, (item) => item.users)
+  @JoinTable({
+    name: 'user_item',
+    joinColumn: { name: 'user_id' },
+    inverseJoinColumn: { name: 'item_id' }
+  })
+  items: Item[];
 }

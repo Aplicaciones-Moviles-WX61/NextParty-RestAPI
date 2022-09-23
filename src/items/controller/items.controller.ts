@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Item } from '../entity/item.entity';
 import { ItemsService } from '../service/items.service';
@@ -19,14 +19,19 @@ export class ItemsController {
     return await this.itemsService.create(wishlist_id, item);
   }
 
-  @Put(':id')
-  async update(@Param('id')id: number, @Body() item:Item){
-    return await this.itemsService.update(id,item);
+  @Delete(':id')
+  async deleteAll(@Param('id') party_id: number) {
+    return await this.itemsService.deleteAll(party_id);
   }
 
-  @Delete(":id")
-  async delete(@Param('id') id : number){
-    return await this.itemsService.delete(id);
-  }
+  // @Put(':id')
+  // async update(@Param('id')id: number, @Body() item:Item){
+  //   return await this.itemsService.update(id,item);
+  // }
+
+  // @Delete(":id")
+  // async delete(@Param('id') id : number){
+  //   return await this.itemsService.delete(id);
+  // }
 
 }

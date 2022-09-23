@@ -1,6 +1,6 @@
 import { Item } from "src/items/entity/item.entity";
 import { Party } from "src/parties/entity/party.entity";
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('wishlists')
 export class Wishlist {
@@ -16,10 +16,11 @@ export class Wishlist {
   @Column()
   party_id: number;
 
-  @OneToOne(() => Party, (party) => party.id)
+  @OneToOne(() => Party, (party) => party.wishlist)
+  @JoinColumn({ name: 'party_id' })
   party: Party;
 
-  @OneToMany(() => Item, (item) => item.id)
+  @OneToMany(() => Item, (item) => item.wishlist)
   Items: Item[];
 
 }

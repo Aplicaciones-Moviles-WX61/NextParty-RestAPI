@@ -1,5 +1,6 @@
+import { User } from "src/users/entity/user.entity";
 import { Wishlist } from "src/wishlists/entity/whislist.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('parties')
 export class Party {
@@ -21,6 +22,14 @@ export class Party {
   @Column({length: 100})
   image: string;
 
-  @OneToOne(() => Wishlist, (wishlist) => wishlist.id)
+  @OneToOne(() => Wishlist, (wishlist) => wishlist.party)
   wishlist: Wishlist;
+
+  @OneToMany(() => User, (user) => user.parties)
+  @JoinTable({
+    name: 'user_party',
+    joinColumn: { name: 'party_id' },
+    inverseJoinColumn: { name: 'user_id' }
+  })
+  users: User[];
 }

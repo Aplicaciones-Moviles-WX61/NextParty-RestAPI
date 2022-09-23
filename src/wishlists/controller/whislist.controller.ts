@@ -6,13 +6,9 @@ import { WishlistService } from "../service/whislist.service";
 
 @ApiTags('Wishlists')
 @Controller('party')
-export class WishlitController{
+export class WishlistController{
   constructor(private readonly listService: WishlistService){
-    // super();
   }
-  // getService(): BaseService<Wishlist>{
-  //   return this.listService;
-  // }
 
   @Get(':id')
   async getOne(@Param('id') id:number): Promise<Wishlist> {
