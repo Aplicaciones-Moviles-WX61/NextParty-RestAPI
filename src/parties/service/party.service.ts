@@ -1,12 +1,14 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Wishlist } from "src/wishlists/entity/whislist.entity";
 import { Repository } from "typeorm";
 import { Party } from "../entity/party.entity";
 
 @Injectable()
 export class PartyService{
-  constructor(@InjectRepository(Party) private partyRepo: Repository<Party>) {
-  }
+  constructor(
+    @InjectRepository(Party) private partyRepo: Repository<Party>,
+    @InjectRepository(Wishlist) private wishlistRepo: Repository<Wishlist>) {}
 
   async getAll() : Promise<Party[]>{
     return await this.partyRepo.find();
@@ -14,13 +16,15 @@ export class PartyService{
 
   async exists(id: number) {
     const party = await this.partyRepo.findOneBy({ "id": id  });
-    return party != null; //
+    return party != null;
   }
 
   async getById(id: number) : Promise<Party>{
     const party = await this.partyRepo.findOneBy({
       id: id
     });
+    if (party == null)
+      throw new BadRequestException('Party not found');
     return party;
   }
 

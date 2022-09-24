@@ -18,7 +18,6 @@ export class CategoryService{
         category: item.category
       }
     )
-    console.log(items.length);
     if (items.length != 0)
       throw new BadRequestException('Category already exists');
     await this.repo.save(this.repo.create(item));

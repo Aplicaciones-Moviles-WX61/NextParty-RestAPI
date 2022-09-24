@@ -25,8 +25,8 @@ export class Item {
   image: string;
 
   // @JoinColumn( {name: "party_id"} )
-  @ManyToOne(() => Wishlist, (wishlist) => wishlist.Items)
-  @JoinColumn({ name: 'party_id' })
+  @ManyToOne(() => Wishlist, (wishlist) => wishlist.Items, { cascade: true })
+  @JoinColumn({ name: 'party_id',referencedColumnName: 'id'})
   wishlist: Wishlist;
 
   @ManyToMany(() => User, (user) => user.items)
