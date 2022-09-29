@@ -1,43 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/common/service.common';
 import { Repository } from 'typeorm';
 import { Categories } from '../entity/types.entity';
 
 @Injectable()
-export class CategoryService extends BaseService<Categories>{
+export class CategoryService{
   constructor(@InjectRepository(Categories) private repo: Repository<Categories>) {
-    super();
-  }
-
-  getRepository(): Repository<Categories> {
-    return this.repo;
   }
 
   getAll() : Promise<Categories[]>{
-    return this.getRepository().find();
+    return this.repo.find();
   }
-
-  // async getById(id: any) : Promise<ItemTypes>{
-  //   const items = await this.repo.find({
-  //     select: ["type"],
-  //     where: [{ "id": id }]
-  //   });
-  //   if (items.length == 0)
-  //     throw new BadRequestException('Element not found');
-  //   return items[0];
-  // }
 
   async create(item: Categories) {
-    this.repo.create(item);
-    return await this.repo.save(item);
+    const items = await this.repo.findBy(
+      {
+        category: item.category
+      }
+    )
+    if (items.length != 0)
+      throw new BadRequestException('Category already exists');
+    await this.repo.save(this.repo.create(item));
   }
 
-  async update(id: any,item:Categories){
+  async update(id: number,item:Categories){
     await this.repo.update(id,item);
   }
 
-  async delete(id: any){
+  async delete(id: number){
     await this.repo.delete(id);
   }
 }
