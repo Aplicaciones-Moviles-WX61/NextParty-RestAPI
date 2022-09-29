@@ -1,42 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/common/service.common';
 import { Repository } from 'typeorm';
 import { Roles } from '../entity/types.entity';
 
 @Injectable()
-export class RoleService extends BaseService<Roles>{
+export class RoleService{
   constructor(@InjectRepository(Roles) private repo: Repository<Roles>) {
-    super();
   }
+
   getAll() : Promise<Roles[]>{
-    return this.getRepository().find();
+    return this.repo.find();
   }
-
-  getRepository(): Repository<Roles> {
-    return this.repo;
-  }
-
-  // async getById(id: any) : Promise<TypeOfUser>{
-  //   const items = await this.repo.find({
-  //     select: ["type"],
-  //     where: [{ "id": id }]
-  //   });
-  //   if (items.length == 0)
-  //     throw new BadRequestException('Element not found');
-  //   return items[0];
-  // }
 
   async create(item: Roles) {
-    this.repo.create(item);
-    return await this.repo.save(item);
+    const items = await this.repo.findBy(
+      {
+        role: item.role
+      }
+    )
+    if (items.length != 0)
+      throw new BadRequestException('Role already exists');
+    return await this.repo.save(this.repo.create(item));
   }
 
-  async update(id: any,item:Roles){
+  async update(id: number,item:Roles){
     await this.repo.update(id,item);
   }
 
-  async delete(id: any){
+  async delete(id: number){
     await this.repo.delete(id);
   }
 }

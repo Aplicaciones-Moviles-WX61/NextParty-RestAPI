@@ -7,6 +7,7 @@ import { PartyModule } from './parties/party.module';
 import { TypeModule } from './types_of/types.module';
 import { UserModule } from './users/user.module';
 import { WishlistModule } from './wishlists/whislist.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { WishlistModule } from './wishlists/whislist.module';
     PartyModule,
     WishlistModule,
     ItemsModule,
-    TypeModule
+    TypeModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

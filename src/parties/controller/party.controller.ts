@@ -1,34 +1,41 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
-import { BaseController } from "src/common/controler.common";
-import { BaseService } from "src/common/service.common";
+import { Body, Controller, Delete, Get, Param, Put, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { Party } from "../entity/party.entity";
 import { PartyService } from "../service/party.service";
 
-
+@ApiBearerAuth()
 @ApiTags('Parties')
 @Controller('parties')
-export class PartyController extends BaseController<Party> {
+export class PartyController {
   constructor(private readonly partyService: PartyService){
-    super();
   }
-  getService(): BaseService<Party>{
-    return this.partyService;
+  @Get()
+  async getAll() : Promise<Party[]>{
+    return await this.partyService.getAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getById(@Param('id')id: number) : Promise<Party>{
     return await this.partyService.getById(id);
   }
 
-  @Post()
-  async create(@Body() party: Party) {
-    return await this.partyService.create(party);
-  }
+      // @UseGuards(JwtAuthGuard)
+      // @Post()
+      // async create(@Body() party: Party) {
+      //   return await this.partyService.create(party);
+      // }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(@Param('id')id: number,@Body() party:Party){
     return await this.partyService.update(id,party);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async delete(@Param('id')id: number){
+    return await this.partyService.delete(id);
+  }
 }

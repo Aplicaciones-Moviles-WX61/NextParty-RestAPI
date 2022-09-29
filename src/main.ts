@@ -5,6 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
   const options = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('NextParty API')
     .setDescription('Documentation for NextParty RESTfull API')
     .setVersion('1.0')
