@@ -21,11 +21,11 @@ export class PartyController {
     return await this.partyService.getById(id);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Post()
-  // async create(@Body() party: Party) {
-  //   return await this.partyService.create(party);
-  // }
+      // @UseGuards(JwtAuthGuard)
+      // @Post()
+      // async create(@Body() party: Party) {
+      //   return await this.partyService.create(party);
+      // }
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
