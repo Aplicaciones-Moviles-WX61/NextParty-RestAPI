@@ -71,5 +71,5 @@ Alter table user_item add CONSTRAINT `User_Item_Items` FOREIGN KEY (`item_id`) R
 Alter table user_item add CONSTRAINT `User_Item_Users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 Alter table user_party add CONSTRAINT `user_party_Parties` FOREIGN KEY (`party_id`) REFERENCES `parties` (`id`);
 Alter table user_party add CONSTRAINT `user_party_Users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-ALTER TABLE user_party ADD CONSTRAINT `user_party_role` FOREIGN KEY User_Party_Role (`role_id`) REFERENCES Roles (id);
+-- ALTER TABLE user_party ADD CONSTRAINT `user_party_role` FOREIGN KEY  (`role_id`) REFERENCES `roles` (`id`);
 Alter table wishlists add CONSTRAINT `Wishlists_Parties` FOREIGN KEY (`party_id`) REFERENCES `parties` (`id`) ;

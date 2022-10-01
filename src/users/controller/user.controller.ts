@@ -39,8 +39,8 @@ export class UserController {
     return await this.userService.delete(id);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post(':id')
+  // @UseGuards(JwtAuthGuard)
+  @Post(':id/party')
   async party(@Param('id') id:number , @Body() party: Party) {
     return await this.userService.createParty(id,party);
   }
