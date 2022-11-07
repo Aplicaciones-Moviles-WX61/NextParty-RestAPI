@@ -40,7 +40,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(':id')
+  @Post(':id/party')
   async party(@Param('id') id:number , @Body() party: Party) {
     return await this.userService.createParty(id,party);
   }
