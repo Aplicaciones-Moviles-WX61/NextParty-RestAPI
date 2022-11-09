@@ -79,9 +79,23 @@ export class UserService{
 
   async checkItem(id: number, item_d: number) {
     const user = await this.userRepo.findOneBy({id:id});
-    if (user == null)
+    if (!user)
       throw new BadRequestException('User not found');
-    user.items = [await this.itemRepo.findOneBy({id:item_d})];
-    return await this.userRepo.save(user);
+    const temp = await this.userRepo.find({
+      relations: ["items"],
+      where: [{ "id": id }]
+    });
+    var items = temp[0].items;
+    var item = await this.itemRepo.findOneBy({id:item_d});
+    items = [...items, item];
+    user.items = items;
+    const temp2 = await this.itemRepo.find({
+      relations: ["users"],
+      where: [{ "id": item_d }]
+    });
+    var pushItem = temp2[0];
+    pushItem.users = [...pushItem.users, user];
+    return await this.itemRepo.save(pushItem);
+    // return await this.userRepo.save(user);
   }
 }

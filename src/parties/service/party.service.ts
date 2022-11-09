@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/users/entity/user.entity";
 import { Repository } from "typeorm";
+import { inviteDto } from "../dtos/invite.dto";
 import { Party } from "../entity/party.entity";
 
 @Injectable()
@@ -47,11 +48,11 @@ export class PartyService{
     await this.partyRepo.delete(id);
   }
 
-  async invite(id: number, email: string){
+  async invite(id: number, email: inviteDto){
     var e = await this.partyRepo.findOneBy({id: id});
     if (!e)
       throw new BadRequestException('Party not found');
-    var user = await this.userRepo.findOneBy({ "email": email });
+    const user = await this.userRepo.findOneBy({ email: email.email });
     if (!user)
       throw new BadRequestException('User not found');
     const temp = await this.partyRepo.find({
@@ -83,4 +84,14 @@ export class PartyService{
     return temp[0].parties;
   }
 
+  async listPartyGuests(id: number){
+    const party = await this.partyRepo.findOneBy({ "id": id });
+    if (!party)
+      throw new BadRequestException('Party not found');
+    const temp = await this.partyRepo.find({
+      relations: ["users"],
+      where: [{ "id": id }]
+    });
+    return temp[0].users;
+  }
 }

@@ -45,7 +45,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(':id/:item_id')
+  @Post(':id/check/:item_id')
   async checkItem(@Param('id') id:number , @Param('item_id') item_id:number) {
     return await this.userService.checkItem(id,item_id);
   }

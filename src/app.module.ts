@@ -13,10 +13,10 @@ import { WishlistModule } from './wishlists/whislist.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'nextparty.mysql.database.azure.com',
       port: 3306,
-      username: 'root',
-      password: '123456',
+      username: 'admin1',
+      password: 'NextParty1',
       database: 'nextparty',
       autoLoadEntities: true,
     }),
