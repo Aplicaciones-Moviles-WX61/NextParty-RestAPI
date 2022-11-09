@@ -29,11 +29,11 @@ export class WishlistService{
   }
 
   async createWishlist(id: number, list: Wishlist) {
+    if ((await this.listRepo.findOneBy({party_id:id})))
+      throw new BadRequestException('This party already have a wishlist');
     const party = await this.partyRepo.findOneBy({
       id: id
     });
-    if ((await this.listRepo.findOneBy({party_id:id})) != null)
-      throw new BadRequestException('This party already have a wishlist');
     party.wishlist = list;
     const temp = await this.partyRepo.save(party);
     const _list = list;
@@ -52,13 +52,10 @@ export class WishlistService{
        throw new BadRequestException('Party not found');
      if ((await this.listRepo.findOneBy({party_id:id})) == null)
        throw new BadRequestException('This party does not have a wishlist');
-    party.wishlist = list;
-    const temp = await this.partyRepo.save(party);
-    const _list = list;
-    _list.party = temp;
-    await this.listRepo.save(_list);
+    const _list = {...list , party_id: id, party: party};
+    await this.listRepo.update({party_id:id},_list);
     return await this.listRepo.findOneBy({
-      id: _list.id
+      party_id: id
     });
   }
 

@@ -15,11 +15,6 @@ export class RoleController {
     return await this.service.getAll();
   }
 
-  // @Get(':id')
-  // async getById(@Param('id')id: number) : Promise<TypeOfUser>{
-  //   return await this.service.getById(id);
-  // }
-
   @Post()
   async create(@Body() item: Roles) {
     return await this.service.create(item);

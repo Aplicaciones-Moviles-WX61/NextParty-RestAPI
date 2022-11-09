@@ -17,7 +17,7 @@ import { WishlistModule } from './wishlists/whislist.module';
       port: 3306,
       username: 'admin1',
       password: 'NextParty1',
-      database: 'v2',
+      database: 'nextparty',
       autoLoadEntities: true,
     }),
     UserModule,

@@ -16,7 +16,7 @@ export class Wishlist {
   @Column()
   party_id: number;
 
-  @OneToOne(() => Party, (party) => party.wishlist, { cascade: true })
+  @OneToOne(() => Party, (party) => party.wishlist)
   @JoinColumn({name: 'party_id', referencedColumnName: 'id'})
   party: Party;
 

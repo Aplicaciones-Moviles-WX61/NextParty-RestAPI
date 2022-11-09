@@ -25,12 +25,11 @@ export class Party {
   @OneToOne(() => Wishlist, (wishlist) => wishlist.party)
   wishlist: Wishlist;
 
-  @ManyToMany(() => User, (user) => user.parties,{})
+  @ManyToMany(() => User, (user) => user.parties)
   @JoinTable({
     name: 'user_party',
     joinColumn: { name: 'party_id' },
     inverseJoinColumn: { name: 'user_id' }
   })
-
   users: User[];
 }
