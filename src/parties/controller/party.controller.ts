@@ -23,7 +23,7 @@ export class PartyController {
 
   @UseGuards(JwtAuthGuard)
   @Post(':id/invite')
-  async invite(@Param('id')id: number,@Body('email')email: string){
+  async invite(@Param('id') id: number, @Body() email: string){
     return await this.partyService.invite(id,email);
   }
 
@@ -37,5 +37,12 @@ export class PartyController {
   @Delete(':id')
   async delete(@Param('id')id: number){
     return await this.partyService.delete(id);
+  }
+
+
+  @UseGuards(JwtAuthGuard)
+  @Get('user/:id')
+  async getByUserId(@Param('id')id: number) : Promise<any[]>{
+    return await this.partyService.listUserParties(id);
   }
 }

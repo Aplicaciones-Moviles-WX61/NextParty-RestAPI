@@ -28,15 +28,16 @@ export class PartyService{
     return party;
   }
 
-  async create(party: Party) {
-    return await this.partyRepo.save(this.partyRepo.create(party));
-  }
+  // async create(party: Party) {
+  //   return await this.partyRepo.save(this.partyRepo.create(party));
+  // }
 
   async update(id: number, party:Party){
-    const exist = await this.exists(id);
-    if (exist)
+    const e = await this.partyRepo.findOneBy({id: id});
+    if (!e)
       throw new BadRequestException('Party not found');
     await this.partyRepo.update(id,party);
+    return await this.partyRepo.findOneBy({id: id});
   }
 
   async delete(id: number){
@@ -45,7 +46,8 @@ export class PartyService{
       throw new BadRequestException('Party not found');
     await this.partyRepo.delete(id);
   }
-  async invite(id: number,email: string){
+
+  async invite(id: number, email: string){
     var e = await this.partyRepo.findOneBy({id: id});
     if (!e)
       throw new BadRequestException('Party not found');
@@ -67,8 +69,18 @@ export class PartyService{
     var guest = temp2[0];
     guest.parties.push(party);
     await this.userRepo.save(guest);
-    party.users.push(user);
     await this.partyRepo.save(party);
-    return party;
   }
+
+  async listUserParties(id: number){
+    const user = await this.userRepo.findOneBy({ "id": id });
+    if (!user)
+      throw new BadRequestException('User not found');
+    const temp = await this.userRepo.find({
+      relations: ["parties"],
+      where: [{ "id": id }]
+    });
+    return temp[0].parties;
+  }
+
 }

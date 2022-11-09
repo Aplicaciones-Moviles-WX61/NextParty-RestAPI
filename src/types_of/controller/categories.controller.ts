@@ -14,11 +14,6 @@ export class CategoryController{
     return await this.service.getAll();
   }
 
-  // @Get(':id')
-  // async getById(@Param('id')id: number) : Promise<Categories>{
-  //   return await this.service.getById(id);
-  // }
-
   @Post()
   async create(@Body() item: Categories) {
     return await this.service.create(item);
