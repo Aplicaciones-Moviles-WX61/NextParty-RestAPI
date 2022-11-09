@@ -36,19 +36,29 @@ export class ItemsService{
     return await this.itemRepo.save(_item);
   }
 
-  async update(party_id: number, items: Item[]) {
+  // async update(party_id: number, items: Item[]) {
+  //   if ((await this.partyRepo.findOneBy({id:party_id})) == null)
+  //     throw new BadRequestException("Party not found");
+  //   const list = await this.listRepo.findOneBy({ party_id: party_id });
+  //   if (list == null)
+  //     throw new BadRequestException("This party does not have a wishlist");
+  //   const _currentItems = await this.itemRepo.find({where: {party_id: list.id}});
+  //   list.Items = items;
+  //   for (let i = 0; i < list.Items.length; i++) {
+  //     list.Items[i].party_id = list.id;
+  //     await this.itemRepo.update(_currentItems[i].id,list.Items[i]);
+  //   }
+  //   return await this.itemRepo.find({where: {party_id: list.id}});
+  // }
+
+  async update(party_id: number, item_id: number, items: Item) {
     if ((await this.partyRepo.findOneBy({id:party_id})) == null)
       throw new BadRequestException("Party not found");
     const list = await this.listRepo.findOneBy({ party_id: party_id });
     if (list == null)
       throw new BadRequestException("This party does not have a wishlist");
-    const _currentItems = await this.itemRepo.find({where: {party_id: list.id}});
-    list.Items = items;
-    for (let i = 0; i < list.Items.length; i++) {
-      list.Items[i].party_id = list.id;
-      await this.itemRepo.update(_currentItems[i].id,list.Items[i]);
-    }
-    return await this.itemRepo.find({where: {party_id: list.id}});
+    await this.itemRepo.update(item_id,items);
+    return await this.itemRepo.find({where: {id: item_id}});
   }
 
   async deleteAll(party_id: number) {

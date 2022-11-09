@@ -23,17 +23,18 @@ export class ItemsController {
     return await this.itemsService.create(wishlist_id, item);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Put(':id/items')
-  async update(@Param('id')id: number, @Body() items:Item[]){
-    return await this.itemsService.update(id,items);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Put(':id/items')
+  // async update(@Param('id')id: number, @Body() items:Item[]){
+  //   return await this.itemsService.update(id,items);
+  // }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id/items')
-  async deleteAll(@Param('id') party_id: number) {
-    return await this.itemsService.deleteAll(party_id);
+  @Put(':id/items/:item_id')
+  async update(@Param('id')id: number , @Param('item_id') item_id: number , @Body() item:Item){
+    return await this.itemsService.update(id,item_id, item);
   }
+
 
   @UseGuards(JwtAuthGuard)
   @Delete(":id/items")
