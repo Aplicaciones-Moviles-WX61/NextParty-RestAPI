@@ -41,7 +41,7 @@ CREATE TABLE `user_item` (
 CREATE TABLE `user_party` (
   `user_id` int NOT NULL,
   `party_id` int NOT NULL,
-  `role_Id` int NOT NULL DEFAULT '1',
+  `role_id` int NULL DEFAULT '1',
   PRIMARY KEY (`user_id`,`party_id`)
 );
 
@@ -64,12 +64,11 @@ CREATE TABLE `wishlists` (
   PRIMARY KEY (`id`)
 );
 
-Alter table items add CONSTRAINT `Items_Category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
-Alter table items add CONSTRAINT `Items_Wishlists` FOREIGN KEY (`party_id`) REFERENCES `wishlists` (`id`);
-Alter table user_item add CONSTRAINT `User_Items` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
-Alter table user_item add CONSTRAINT `Users_Item` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-Alter table user_party add CONSTRAINT `user_parties` FOREIGN KEY (`party_id`) REFERENCES `parties` (`id`);
-Alter table user_party add CONSTRAINT `party_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-ALTER TABLE user_party add CONSTRAINT `user_party_role` FOREIGN KEY (`role_id`) REFERENCES  `roles` (`id`);
-Alter table wishlists add CONSTRAINT `wishlists_parties` FOREIGN KEY (`party_id`) REFERENCES `parties` (`id`) ;
-
+Alter table items add constraint `item_category` foreign key (`category_id`) references `categories` (`id`);
+Alter table items add constraint `wishlist_item` foreign key (`party_id`) references `wishlists` (`id`);
+Alter table user_item add constraint `item_user` foreign key (`item_id`) references `items` (`id`);
+Alter table user_item add constraint `user_item` foreign key (`user_id`) references `users` (`id`);
+Alter table user_party add constraint `party_user` foreign key (`party_id`) references `parties` (`id`);
+Alter table user_party add constraint `user_party` foreign key (`user_id`) references `users` (`id`);
+-- Alter table user_party add constraint `user_role` foreign key (`role_id`) references  `roles` (`id`);
+Alter table wishlists add constraint `wishlist_party` foreign key (`party_id`) references `parties` (`id`);

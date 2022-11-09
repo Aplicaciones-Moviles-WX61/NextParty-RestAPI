@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { Party } from "../entity/party.entity";
@@ -21,11 +21,11 @@ export class PartyController {
     return await this.partyService.getById(id);
   }
 
-      // @UseGuards(JwtAuthGuard)
-      // @Post()
-      // async create(@Body() party: Party) {
-      //   return await this.partyService.create(party);
-      // }
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/invite')
+  async invite(@Param('id')id: number,@Body('email')email: string){
+    return await this.partyService.invite(id,email);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')

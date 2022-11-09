@@ -39,7 +39,7 @@ export class User {
     this.password = await hash(this.password, 10);
   }
 
-  @ManyToMany(()=> Party, (party) => party.users, {})
+  @ManyToMany(()=> Party, (party) => party.users)
   @JoinTable({
     name: 'user_party',
     joinColumn: { name: 'user_id' },
@@ -50,8 +50,9 @@ export class User {
   @ManyToMany(()=> Item, (item) => item.users)
   @JoinTable({
     name: 'user_item',
-    joinColumn: { name: 'user_id' },
-    inverseJoinColumn: { name: 'item_id' }
+    joinColumn: { name: 'user_id'},
+    inverseJoinColumn: { name: 'item_id'},
+
   })
   items: Item[];
 }
