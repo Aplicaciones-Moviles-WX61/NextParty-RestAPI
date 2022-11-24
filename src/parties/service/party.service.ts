@@ -71,6 +71,8 @@ export class PartyService{
     guest.parties.push(party);
     await this.userRepo.save(guest);
     await this.partyRepo.save(party);
+
+    return user;
   }
 
   async listUserParties(id: number){
